@@ -94,6 +94,7 @@ class HiddenLayer(object):
                     size=(n_in, n_out)), dtype=theano.config.floatX)
             if activation == theano.tensor.nnet.sigmoid:
                 W_values *= 4
+        #服从uniform分布
 
             W = theano.shared(value=W_values, name='W', borrow=True)
 
@@ -167,10 +168,14 @@ class MLP(object):
             n_in=n_hidden,
             n_out=n_out)
 
+        #逻辑回归层从隐式单元的输出取得输入
+
         # L1 norm 基准 ; one regularization option is to enforce L1 norm to
         # be small
         self.L1 = abs(self.hiddenLayer.W).sum() \
                 + abs(self.logRegressionLayer.W).sum()
+
+        # Li基准
 
         # square of L2 norm L2 平方基准 ; one regularization option is to enforce
         # square of L2 norm to be small
@@ -212,6 +217,7 @@ def test_mlp(learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001, n_epochs=1000,
 
     :type n_epochs: int
     :param n_epochs: maximal number of epochs to run the optimizer
+    最大运行期数
 
     :type dataset: string
     :param dataset: the path of the MNIST dataset file from
@@ -250,6 +256,9 @@ def test_mlp(learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001, n_epochs=1000,
     # the cost we minimize during training is the negative log likelihood of
     # the model plus the regularization terms (L1 and L2); cost is expressed
     # here symbolically
+
+    # 代价函数是最小负对数似然加上L1和L2的正则
+
     cost = classifier.negative_log_likelihood(y) \
          + L1_reg * classifier.L1 \
          + L2_reg * classifier.L2_sqr
@@ -373,3 +382,8 @@ def test_mlp(learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001, n_epochs=1000,
 
 if __name__ == '__main__':
     test_mlp()
+
+
+
+# Optimization complete. Best validation score of 1.690000 % obtained at iteration 2070000, with test performance 1.650000 %
+# The code for file mlp.py ran for 97.34m
