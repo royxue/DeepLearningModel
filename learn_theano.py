@@ -52,10 +52,9 @@ accumulator = function([inc], state, updates=[(state, state+inc)])
 #It is called a shared variable because its value is shared between many functions. 
 #The value can be accessed and modified by the .get_value() and .set_value() methods. 
 
-# param updates: means “whenever this function runs, 
+# param (updates): means “whenever this function runs, 
 # it will replace the .value of each shared variable with the result of the corresponding expression”
 
-# param:givens is as a mechanism that allows you to replace any part of your formula 
+# param:(givens) is as a mechanism that allows you to replace any part of your formula 
 # with a different expression that evaluates to a tensor of same shape and dtype.
 
- # 
